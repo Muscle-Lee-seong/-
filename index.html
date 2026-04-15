@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>가야이음교회 교회학교</title>
+    <link rel="manifest" href="./manifest.json">
+    <meta name="theme-color" content="#FFF9F0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="가야이음">
+    <link rel="stylesheet" href="./app.css">
+    <!-- Ionicons -->
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <!-- Google Fonts 및 Pretendard -->
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="app-header" style="justify-content: space-between; padding: 0 20px;">
+        <div style="width: 24px;"></div> <!-- 중앙 정렬 맞춤용 -->
+        <h1>가야이음교회</h1>
+        <ion-icon name="lock-closed-outline" id="admin-login-btn" style="font-size: 1.4rem; color: var(--text-muted); cursor: pointer;" onclick="toggleAdmin()"></ion-icon>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="app-content">
+        
+        <!-- 1. होम (Home / Dashboard) -->
+        <section id="view-home" class="view-section active">
+            <div class="welcome-card">
+                <h2>환영합니다! ✨</h2>
+                <p>이번 주도 은혜로운 시간 되세요.</p>
+            </div>
+
+            <div class="card about-card">
+                <h3>⛪ 가야이음 교회학교는 어떤 곳인가요?</h3>
+                <p style="margin-top: 10px; font-size: 0.95rem; line-height: 1.5; color: var(--text-muted);">
+                    어두운 데에 빛이 비치라 말씀하셨던 하나님의 영광을 바라보며, 오직 <strong>복음</strong>을 중심에 두고 공동체를 이루어가는 곳입니다.<br><br>
+                    기독교 신앙에 대해 진지하게 고민하거나, 아직 확신이 없는 친구들 모두를 진심으로 환영합니다. 함께 말씀을 나누며 예수 그리스도의 사랑 안에서 서로를 <strong>잇고(이음)</strong>, 세상에 영광의 빛을 비추는 다음 세대로 함께 자라가요! 🙌
+                </p>
+                <div style="display: flex; gap: 8px; margin-top: 15px; flex-wrap: wrap;">
+                    <span class="badge" style="background: var(--primary-color); color: #fff; margin-bottom: 0;">#복음중심</span>
+                    <span class="badge" style="background: var(--primary-light); color: #fff; margin-bottom: 0;">#열린공동체</span>
+                    <span class="badge" style="background: var(--secondary-color); color: #fff; margin-bottom: 0;">#사랑과_이음</span>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                    <h3 style="margin: 0;">📢 주요 공지사항</h3>
+                    <button class="btn outline admin-only" style="width: auto; padding: 4px 10px; font-size: 0.75rem; margin: 0;" onclick="openAddNoticeModal()">+ 공지 추가</button>
+                </div>
+                <ul class="notice-list" id="notice-list">
+                    <!-- JS 연동 -->
+                </ul>
+            </div>
+
+            <div class="card quick-actions">
+                <button class="btn primary" onclick="switchTab('view-bulletin')">이번 주 주보 보기</button>
+            </div>
+        </section>
+
+        <!-- 2. 주보 (Bulletin) -->
+        <section id="view-bulletin" class="view-section">
+            <h2 class="section-title">이번 주 주보</h2>
+            
+            <div class="card praise-card">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                    <h3>🎵 이번 주 찬양</h3>
+                    <button class="btn outline admin-only" style="width: auto; padding: 4px 10px; font-size: 0.75rem; margin: 0;" onclick="openAddPraiseModal()">+ 찬양 추가</button>
+                </div>
+                <div id="praise-list">
+                    <!-- JavaScript로 채워짐 -->
+                </div>
+            </div>
+
+            <div class="card bulletin-card">
+                <div class="bulletin-header" style="display: flex; justify-content: space-between; align-items: flex-start;">
+                    <div>
+                        <span class="date" id="bulletin-date"></span>
+                        <h3>예배 순서</h3>
+                    </div>
+                    <button class="btn outline admin-only" style="width: auto; padding: 4px 10px; font-size: 0.75rem; margin: 0;" onclick="openEditBulletinModal()">주보 수정</button>
+                </div>
+                <div class="bulletin-content" id="bulletin-container">
+                    <!-- JS 연동 -->
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. 공과공부 (Bible Study) -->
+        <section id="view-study" class="view-section">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                <h2 class="section-title" style="margin-bottom: 0;">공과공부</h2>
+                <button class="btn outline admin-only" style="width: auto; padding: 4px 10px; font-size: 0.75rem; margin: 0;" onclick="openEditStudyModal()">공과 수정</button>
+            </div>
+            <div id="study-container">
+                <!-- JS 연동 -->
+            </div>
+        </section>
+
+        <!-- 4. 인원관리 (Member Management) -->
+        <section id="view-members" class="view-section">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                <h2 class="section-title" style="margin-bottom: 0;">출석 및 인원 관리</h2>
+                <button class="btn primary" style="width: auto; padding: 6px 14px; font-size: 0.85rem;" onclick="openAddStudentModal()">+ 학생 추가</button>
+            </div>
+            <div class="filter-bar">
+                <select id="class-filter">
+                    <option value="all">전체 반</option>
+                    <option value="1">1학년 반</option>
+                    <option value="2">2학년 반</option>
+                    <option value="3">3학년 반</option>
+                </select>
+                <span class="attendance-summary">출석: <b id="att-count">0</b>명</span>
+            </div>
+            
+            <ul class="member-list" id="member-list">
+                <!-- JavaScript로 채워짐 -->
+            </ul>
+        </section>
+
+    </main>
+
+    <!-- Bottom Navigation Bar -->
+    <nav class="bottom-nav">
+        <a href="#" class="nav-item active" data-target="view-home">
+            <ion-icon name="home"></ion-icon>
+            <span>홈</span>
+        </a>
+        <a href="#" class="nav-item" data-target="view-bulletin">
+            <ion-icon name="book"></ion-icon>
+            <span>주보</span>
+        </a>
+        <a href="#" class="nav-item" data-target="view-study">
+            <ion-icon name="library"></ion-icon>
+            <span>공과</span>
+        </a>
+        <a href="#" class="nav-item admin-only" id="nav-members" data-target="view-members">
+            <ion-icon name="people"></ion-icon>
+            <span>교역자메뉴</span>
+        </a>
+    </nav>
+
+    <!-- Add Student Modal -->
+    <div id="add-student-modal" class="modal-overlay">
+        <div class="modal-content card">
+            <h3>새 학생 추가</h3>
+            <div class="form-group">
+                <label>이름</label>
+                <input type="text" id="new-student-name" placeholder="학생 이름을 입력하세요">
+            </div>
+            <div class="form-group">
+                <label>학년</label>
+                <select id="new-student-grade">
+                    <option value="1">중학교 1학년</option>
+                    <option value="2">중학교 2학년</option>
+                    <option value="3">중학교 3학년</option>
+                </select>
+            </div>
+            <div class="modal-actions">
+                <button class="btn outline" onclick="closeAddStudentModal()">취소</button>
+                <button class="btn primary" onclick="submitAddStudent()">추가하기</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Praise Modal -->
+    <div id="add-praise-modal" class="modal-overlay">
+        <div class="modal-content card">
+            <h3>새 찬양 추가</h3>
+            <div class="form-group">
+                <label>찬양 제목</label>
+                <input type="text" id="new-praise-title" placeholder="예: 은혜 - 마커스워십">
+            </div>
+            <div class="form-group">
+                <label>유튜브 링크 (URL)</label>
+                <input type="text" id="new-praise-url" placeholder="https://youtu.be/...">
+            </div>
+            <div class="modal-actions">
+                <button class="btn outline" onclick="closeAddPraiseModal()">취소</button>
+                <button class="btn primary" onclick="submitAddPraise()">추가하기</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Bulletin Modal -->
+    <div id="edit-bulletin-modal" class="modal-overlay">
+        <div class="modal-content card">
+            <h3>주보 수정</h3>
+            <div class="form-group">
+                <label>날짜</label>
+                <input type="text" id="edit-bulletin-date">
+            </div>
+            <div class="form-group">
+                <label>말씀 제목</label>
+                <input type="text" id="edit-bulletin-sermon">
+            </div>
+            <div class="form-group">
+                <label>성경 봉독</label>
+                <input type="text" id="edit-bulletin-verse">
+            </div>
+            <div class="form-group">
+                <label>설교자</label>
+                <input type="text" id="edit-bulletin-preacher">
+            </div>
+            <div class="modal-actions">
+                <button class="btn outline" onclick="closeEditBulletinModal()">취소</button>
+                <button class="btn primary" onclick="submitEditBulletin()">저장하기</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Study Modal -->
+    <div id="edit-study-modal" class="modal-overlay">
+        <div class="modal-content card">
+            <h3>공과 수정</h3>
+            <div class="form-group">
+                <label>이번 주 제목</label>
+                <input type="text" id="edit-study-title">
+            </div>
+            <div class="form-group">
+                <label>말씀 구절</label>
+                <input type="text" id="edit-study-verse">
+            </div>
+            <div class="modal-actions">
+                <button class="btn outline" onclick="closeEditStudyModal()">취소</button>
+                <button class="btn primary" onclick="submitEditStudy()">저장하기</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notice Modal (Add / Edit / View) -->
+    <div id="notice-modal" class="modal-overlay">
+        <div class="modal-content card">
+            <h3 id="notice-modal-header">공지사항</h3>
+            <div class="form-group">
+                <label>공지 제목</label>
+                <input type="text" id="notice-detail-title" placeholder="공지 제목을 입력하세요">
+            </div>
+            <div class="form-group">
+                <label>상세 내용</label>
+                <textarea id="notice-detail-body" rows="5" style="width: 100%; box-sizing: border-box; border: 1px solid rgba(255, 255, 255, 0.4); border-radius: 8px; padding: 10px; font-family: inherit; resize: vertical; margin-top: 5px; background: transparent; color: inherit;" placeholder="자세한 정보를 적어주세요."></textarea>
+            </div>
+            <div class="modal-actions" id="notice-action-edit">
+                <button class="btn outline" onclick="closeNoticeModal()">취소</button>
+                <button class="btn primary" onclick="saveNotice()">저장하기</button>
+            </div>
+            <div class="modal-actions" id="notice-action-view" style="display: none;">
+                <button class="btn primary" onclick="closeNoticeModal()">닫기</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="./app.js"></script>
+</body>
+</html>

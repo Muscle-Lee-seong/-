@@ -1,0 +1,16 @@
+{
+  "name": "가야이음교회 교회학교",
+  "short_name": "가야이음",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#8C52FF",
+  "description": "가야이음교회 중등부 사역 및 공과공부 관리 앱",
+  "icons": [
+    {
+      "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Bible_icon.svg/512px-Bible_icon.svg.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
