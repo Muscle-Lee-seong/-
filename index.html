@@ -33,9 +33,10 @@
         
         <!-- 1. होम (Home / Dashboard) -->
         <section id="view-home" class="view-section active">
-            <div class="welcome-card">
-                <h2>환영합니다! ✨</h2>
-                <p>이번 주도 은혜로운 시간 되세요.</p>
+            <div class="welcome-card" style="position: relative;">
+                <h2 id="welcome-title">환영합니다! ✨</h2>
+                <p id="welcome-text">이번 주도 은혜로운 시간 되세요.</p>
+                <button class="btn outline admin-only" style="position: absolute; top: 10px; right: 10px; width: auto; padding: 4px 10px; font-size: 0.7rem; border-color: #fff; color: #fff; background: rgba(255,255,255,0.2);" onclick="openEditWelcomeModal()">수정</button>
             </div>
 
             <div class="card about-card">
@@ -266,6 +267,25 @@
             </div>
             <div class="modal-actions" id="notice-action-view" style="display: none;">
                 <button class="btn primary" onclick="closeNoticeModal()">닫기</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Welcome Modal -->
+    <div id="edit-welcome-modal" class="modal-overlay">
+        <div class="modal-content card">
+            <h3>환영인사 수정</h3>
+            <div class="form-group">
+                <label>제목 (큰 글씨)</label>
+                <input type="text" id="edit-welcome-title">
+            </div>
+            <div class="form-group">
+                <label>내용 (작은 글씨)</label>
+                <input type="text" id="edit-welcome-text">
+            </div>
+            <div class="modal-actions">
+                <button class="btn outline" onclick="closeEditWelcomeModal()">취소</button>
+                <button class="btn primary" onclick="submitEditWelcome()">저장하기</button>
             </div>
         </div>
     </div>

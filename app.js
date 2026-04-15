@@ -473,4 +473,31 @@ document.addEventListener('DOMContentLoaded', () => {
             renderNotices();
         }
     };
+
+    // 8. 환영인사 (Welcome Card) 수정 로직
+    let mockWelcome = {
+        title: '환영합니다! ✨',
+        text: '이번 주도 은혜로운 시간 되세요.'
+    };
+
+    function renderWelcome() {
+        document.getElementById('welcome-title').innerText = mockWelcome.title;
+        document.getElementById('welcome-text').innerText = mockWelcome.text;
+    }
+    renderWelcome();
+
+    const welcomeModal = document.getElementById('edit-welcome-modal');
+    window.openEditWelcomeModal = () => {
+        document.getElementById('edit-welcome-title').value = mockWelcome.title;
+        document.getElementById('edit-welcome-text').value = mockWelcome.text;
+        welcomeModal.classList.add('active');
+    };
+    window.closeEditWelcomeModal = () => welcomeModal.classList.remove('active');
+    window.submitEditWelcome = () => {
+        mockWelcome.title = document.getElementById('edit-welcome-title').value;
+        mockWelcome.text = document.getElementById('edit-welcome-text').value;
+        renderWelcome();
+        closeEditWelcomeModal();
+        alert('환영인사가 수정되었습니다.');
+    };
 });
