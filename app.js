@@ -129,10 +129,11 @@ document.addEventListener('DOMContentLoaded', () => {
             };
 
             const btn = document.createElement('button');
-            btn.className = `att-btn ${member.present ? 'present' : 'absent'}`;
+            btn.className = `att-btn ${member.present ? 'present' : 'absent'} admin-only`;
             btn.innerText = member.present ? '출석' : '결석';
             btn.style.flex = '1';
             btn.onclick = () => {
+                if(!isAdmin) return;
                 member.present = !member.present;
                 renderMembers(); // 상태 변경 후 다시 렌더링
             };

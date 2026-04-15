@@ -28,8 +28,8 @@ body {
     overflow-x: hidden;
     overflow-y: scroll;
     
-    /* Animated Gradient Background */
-    background: linear-gradient(-45deg, #c2e9fb, #a1c4fd, #ffafbd, #ffc3a0);
+    /* Bright & Energetic Animated Gradient Background */
+    background: linear-gradient(-45deg, #FFD1FF, #9EEAFE, #FFFA65, #FF9A8B);
     background-size: 400% 400%;
     animation: gradientBG 15s ease infinite;
     min-height: 100vh;
