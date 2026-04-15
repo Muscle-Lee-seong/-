@@ -223,8 +223,12 @@ document.addEventListener('DOMContentLoaded', () => {
         mockPraises.forEach(praise => {
             const div = document.createElement('div');
             div.className = 'praise-item';
+            div.style.marginBottom = '20px';
             div.innerHTML = `
-                <p>▶ ${praise.title}</p>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                    <p style="margin: 0; font-weight: 600;">▶ ${praise.title}</p>
+                    <ion-icon name="trash-outline" class="admin-only" style="color: #ff4d4d; cursor: pointer; font-size: 1.2rem;" onclick="deletePraise(${praise.id})"></ion-icon>
+                </div>
                 <div class="video-container">
                     <iframe src="https://www.youtube.com/embed/${praise.videoId}" allowfullscreen></iframe>
                 </div>
@@ -233,6 +237,16 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
     renderPraises();
+
+    window.deletePraise = (id) => {
+        if (confirm('이 찬양 영상을 삭제하시겠습니까?')) {
+            const idx = mockPraises.findIndex(p => p.id === id);
+            if (idx > -1) {
+                mockPraises.splice(idx, 1);
+                renderPraises();
+            }
+        }
+    };
 
     const praiseModal = document.getElementById('add-praise-modal');
     const praiseTitleInput = document.getElementById('new-praise-title');
