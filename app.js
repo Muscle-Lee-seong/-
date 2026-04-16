@@ -225,11 +225,13 @@ document.addEventListener('DOMContentLoaded', () => {
             div.className = 'praise-item';
             div.style.marginBottom = '20px';
             div.innerHTML = `
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-                    <p style="margin: 0; font-weight: 600;">▶ ${praise.title}</p>
-                    <ion-icon name="trash-outline" class="admin-only" style="color: #ff4d4d; cursor: pointer; font-size: 1.2rem;" onclick="deletePraise(${praise.id})"></ion-icon>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                    <p style="margin: 0; font-weight: 600; font-size: 1rem; color: var(--text-main);">▶ ${praise.title}</p>
+                    <span class="admin-only" style="cursor: pointer; padding: 4px;" onclick="deletePraise(${praise.id})">
+                        <ion-icon name="trash" style="color: #ff4d4d; font-size: 1.3rem;"></ion-icon>
+                    </span>
                 </div>
-                <div class="video-container">
+                <div class="video-container" style="border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
                     <iframe src="https://www.youtube.com/embed/${praise.videoId}" allowfullscreen></iframe>
                 </div>
             `;
