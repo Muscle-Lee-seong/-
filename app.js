@@ -220,16 +220,24 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        mockPraises.forEach(praise => {
+        mockPraises.forEach((praise, index) => {
             const div = document.createElement('div');
             div.className = 'praise-item';
             div.style.marginBottom = '20px';
+            
+            const isFirst = index === 0;
+            const isLast = index === mockPraises.length - 1;
+
             div.innerHTML = `
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
                     <p style="margin: 0; font-weight: 600; font-size: 1rem; color: var(--text-main);">▶ ${praise.title}</p>
-                    <span class="admin-only" style="cursor: pointer; padding: 4px;" onclick="deletePraise(${praise.id})">
-                        <ion-icon name="trash" style="color: #ff4d4d; font-size: 1.3rem;"></ion-icon>
-                    </span>
+                    <div class="admin-only" style="display: flex; gap: 8px; align-items: center;">
+                        ${!isFirst ? `<ion-icon name="arrow-up-circle-outline" style="color: var(--primary-color); cursor: pointer; font-size: 1.4rem;" onclick="movePraise(${index}, -1)"></ion-icon>` : ''}
+                        ${!isLast ? `<ion-icon name="arrow-down-circle-outline" style="color: var(--primary-color); cursor: pointer; font-size: 1.4rem;" onclick="movePraise(${index}, 1)"></ion-icon>` : ''}
+                        <span style="cursor: pointer; padding: 4px; display: flex; align-items: center;" onclick="deletePraise(${praise.id})">
+                            <ion-icon name="trash" style="color: #ff4d4d; font-size: 1.3rem;"></ion-icon>
+                        </span>
+                    </div>
                 </div>
                 <div class="video-container" style="border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
                     <iframe src="https://www.youtube.com/embed/${praise.videoId}" allowfullscreen></iframe>
@@ -239,6 +247,18 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
     renderPraises();
+
+    window.movePraise = (index, direction) => {
+        const targetIndex = index + direction;
+        if (targetIndex < 0 || targetIndex >= mockPraises.length) return;
+        
+        // 항목 스왑
+        const temp = mockPraises[index];
+        mockPraises[index] = mockPraises[targetIndex];
+        mockPraises[targetIndex] = temp;
+        
+        renderPraises();
+    };
 
     window.deletePraise = (id) => {
         if (confirm('이 찬양 영상을 삭제하시겠습니까?')) {
@@ -388,7 +408,7 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        mockNotices.forEach(notice => {
+        mockNotices.forEach((notice, index) => {
             const li = document.createElement('li');
             li.style.display = 'flex';
             li.style.justifyContent = 'space-between';
@@ -396,12 +416,32 @@ document.addEventListener('DOMContentLoaded', () => {
             li.style.padding = '8px 0';
             li.style.cursor = 'pointer';
             
-            li.innerHTML = `<span style="flex:1;" onclick="openNoticeDetail(${notice.id})">• ${notice.text}</span>
-            <ion-icon name="trash" class="admin-only" style="color: #ff4d4d; cursor: pointer; padding: 4px; font-size: 1.1rem; flex: 0 0 auto;" onclick="deleteNotice(event, ${notice.id})"></ion-icon>`;
+            const isFirst = index === 0;
+            const isLast = index === mockNotices.length - 1;
+
+            li.innerHTML = `
+                <span style="flex:1;" onclick="openNoticeDetail(${notice.id})">• ${notice.text}</span>
+                <div class="admin-only" style="display: flex; gap: 6px; align-items: center; flex: 0 0 auto;">
+                    ${!isFirst ? `<ion-icon name="chevron-up-outline" style="color: var(--primary-color); cursor: pointer; font-size: 1.2rem;" onclick="moveNotice(event, ${index}, -1)"></ion-icon>` : ''}
+                    ${!isLast ? `<ion-icon name="chevron-down-outline" style="color: var(--primary-color); cursor: pointer; font-size: 1.2rem;" onclick="moveNotice(event, ${index}, 1)"></ion-icon>` : ''}
+                    <ion-icon name="trash" style="color: #ff4d4d; cursor: pointer; padding: 4px; font-size: 1.1rem;" onclick="deleteNotice(event, ${notice.id})"></ion-icon>
+                </div>`;
             noticeListEl.appendChild(li);
         });
     }
     renderNotices();
+
+    window.moveNotice = (e, index, direction) => {
+        e.stopPropagation();
+        const targetIndex = index + direction;
+        if (targetIndex < 0 || targetIndex >= mockNotices.length) return;
+
+        const temp = mockNotices[index];
+        mockNotices[index] = mockNotices[targetIndex];
+        mockNotices[targetIndex] = temp;
+
+        renderNotices();
+    };
 
     const noticeModal = document.getElementById('notice-modal');
     const noticeTitleInput = document.getElementById('notice-detail-title');
